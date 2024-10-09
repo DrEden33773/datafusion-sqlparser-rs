@@ -1126,7 +1126,7 @@ pub enum ColumnOption {
     /// ClickHouse supports `MATERIALIZE`, `EPHEMERAL` and `ALIAS` expr to generate default values.
     /// Syntax: `b INT MATERIALIZE (a + 1)`
     /// [ClickHouse](https://clickhouse.com/docs/en/sql-reference/statements/create/table#default_values)
-
+    ///
     /// `MATERIALIZE <expr>`
     Materialized(Expr),
     /// `EPHEMERAL [<expr>]`
