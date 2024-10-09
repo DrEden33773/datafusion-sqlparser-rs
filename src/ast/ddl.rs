@@ -1330,7 +1330,7 @@ pub enum GeneratedExpressionMode {
 #[must_use]
 fn display_constraint_name(name: &'_ Option<Ident>) -> impl fmt::Display + '_ {
     struct ConstraintName<'a>(&'a Option<Ident>);
-    impl<'a> fmt::Display for ConstraintName<'a> {
+    impl fmt::Display for ConstraintName<'_> {
         fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
             if let Some(name) = self.0 {
                 write!(f, "CONSTRAINT {name} ")?;
@@ -1351,7 +1351,7 @@ fn display_option<'a, T: fmt::Display>(
     option: &'a Option<T>,
 ) -> impl fmt::Display + 'a {
     struct OptionDisplay<'a, T>(&'a str, &'a str, &'a Option<T>);
-    impl<'a, T: fmt::Display> fmt::Display for OptionDisplay<'a, T> {
+    impl<T: fmt::Display> fmt::Display for OptionDisplay<'_, T> {
         fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
             if let Some(inner) = self.2 {
                 let (prefix, postfix) = (self.0, self.1);
@@ -1517,6 +1517,7 @@ impl fmt::Display for UserDefinedTypeCompositeAttributeDef {
 }
 
 /// PARTITION statement used in ALTER TABLE et al. such as in Hive and ClickHouse SQL.
+///
 /// For example, ClickHouse's OPTIMIZE TABLE supports syntax like PARTITION ID 'partition_id' and PARTITION expr.
 /// [ClickHouse](https://clickhouse.com/docs/en/sql-reference/statements/optimize)
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]

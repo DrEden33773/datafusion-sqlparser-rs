@@ -104,6 +104,7 @@ impl fmt::Display for Query {
 }
 
 /// Query syntax for ClickHouse ADD PROJECTION statement.
+///
 /// Its syntax is similar to SELECT statement, but it is used to add a new projection to a table.
 /// Syntax is `SELECT <COLUMN LIST EXPR> [GROUP BY] [ORDER BY]`
 ///
@@ -1597,7 +1598,7 @@ impl fmt::Display for Join {
         }
         fn suffix(constraint: &'_ JoinConstraint) -> impl fmt::Display + '_ {
             struct Suffix<'a>(&'a JoinConstraint);
-            impl<'a> fmt::Display for Suffix<'a> {
+            impl fmt::Display for Suffix<'_> {
                 fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
                     match self.0 {
                         JoinConstraint::On(expr) => write!(f, " ON {expr}"),
